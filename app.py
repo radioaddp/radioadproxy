@@ -17,6 +17,14 @@ def proxy_stream():
     except requests.exceptions.RequestException:
         return "Erro ao conectar ao stream original.", 500
 
+@app.route('/lista.m3u')
+def m3u_playlist():
+    m3u_content = """#EXTM3U
+#EXTINF:-1 tvg-id="radioaddp" tvg-name="Rádio AD Dom Pedrito" tvg-logo="https://via.placeholder.com/100x100.png?text=Radio" group-title="Rádios",Rádio AD Dom Pedrito
+https://radioadproxy.onrender.com/stream.m3u8
+"""
+    return Response(m3u_content, content_type='audio/x-mpegurl')
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
